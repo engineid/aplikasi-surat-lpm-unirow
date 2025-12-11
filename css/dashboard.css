@@ -873,3 +873,41 @@
     font-size: 10pt;
   }
 }
+
+/* ========================================
+   FIX: Icon Delete Visibility
+   ======================================== */
+
+/* Force button & SVG display */
+.btn-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.btn-icon svg {
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  fill: none !important;
+}
+
+/* Force delete icon stroke color */
+.btn-icon.btn-delete {
+  background-color: #fee2e2 !important;
+  margin-left: 0.5rem !important;
+}
+
+.btn-icon.btn-delete svg {
+  stroke: #991b1b !important;
+  stroke-width: 2 !important;
+}
+
+.btn-icon.btn-delete svg polyline,
+.btn-icon.btn-delete svg path,
+.btn-icon.btn-delete svg line {
+  stroke: #991b1b !important;
+  stroke-width: 2 !important;
+}
