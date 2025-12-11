@@ -294,43 +294,53 @@
 
 /* NEW: Icon Buttons */
 .btn-icon {
+  display: inline-flex; /* ← PENTING */
+  align-items: center;
+  justify-content: center;
+  width: 32px; /* ← TAMBAH */
+  height: 32px; /* ← TAMBAH */
   padding: 0.5rem;
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  min-height: 32px;
-  margin: 0 0.125rem;
+  transition: all 0.2s ease;
+  background-color: transparent;
 }
 
+/* TAMBAH INI - Force SVG size & display */
 .btn-icon svg {
-  display: block;
+  width: 16px;
+  height: 16px;
+  display: block; /* ← PENTING agar terlihat */
 }
 
 .btn-icon.btn-edit {
   background-color: #dbeafe;
-  color: #2563eb;
+  color: #1e40af;
+}
+
+.btn-icon.btn-edit svg {
+  stroke: #1e40af; /* ← TAMBAH: Force stroke color */
 }
 
 .btn-icon.btn-edit:hover {
-  background-color: #2563eb;
-  color: #ffffff;
-  transform: scale(1.05);
+  background-color: #bfdbfe;
+  transform: scale(1.1); /* ← Lebih besar saat hover */
 }
 
 .btn-icon.btn-delete {
   background-color: #fee2e2;
-  color: #dc2626;
+  color: #991b1b;
+  margin-left: 0.5rem; /* ← TAMBAH: Spacing */
+}
+
+.btn-icon.btn-delete svg {
+  stroke: #991b1b; /* ← TAMBAH: Force stroke color */
 }
 
 .btn-icon.btn-delete:hover {
-  background-color: #dc2626;
-  color: #ffffff;
-  transform: scale(1.05);
+  background-color: #fecaca;
+  transform: scale(1.1); /* ← Lebih besar saat hover */
 }
 
 /* Pagination */
