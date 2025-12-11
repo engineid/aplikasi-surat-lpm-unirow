@@ -754,6 +754,19 @@
   }
 }
 
+.charts-grid {
+    grid-template-columns: 1fr; /* 1 kolom di mobile */
+  }
+  
+  .chart-card {
+    max-height: 250px;
+  }
+  
+  .chart-card canvas {
+    max-height: 180px !important;
+  }
+}
+
 /* Responsive - Mobile */
 @media (max-width: 480px) {
   .header-content {
@@ -823,6 +836,19 @@
     font-size: 0.75rem;
   }
 }
+
+.chart-card {
+    padding: 0.75rem;
+    max-height: 220px;
+  }
+  
+  .chart-title {
+    font-size: 0.8rem;
+  }
+  
+  .chart-card canvas {
+    max-height: 150px !important;
+  }
 
 /* Print Styles */
 @media print {
