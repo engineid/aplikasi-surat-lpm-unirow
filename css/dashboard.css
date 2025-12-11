@@ -104,27 +104,34 @@
 
 /* NEW: Charts Section */
 .charts-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem; /* ← Dikurangi */
 }
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr); /* ← Fixed 2 kolom */
+  gap: 1rem; /* ← Dikurangi */
 }
 
 .chart-card {
   background-color: #ffffff;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 1rem; /* ← Dikurangi */
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  max-height: 300px; /* ← TAMBAH INI */
 }
 
 .chart-title {
-  font-size: 1.125rem;
+  font-size: 0.875rem; /* ← Dikurangi */
   font-weight: 600;
   color: #1f2937;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.75rem 0; /* ← Dikurangi */
+}
+
+/* TAMBAH INI - Batasi tinggi canvas */
+.chart-card canvas {
+  max-height: 220px !important;
+  width: 100% !important;
 }
 
 /* Action Bar */
