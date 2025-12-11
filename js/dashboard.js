@@ -401,9 +401,8 @@ function renderSuratTable(data) {
                 data-id="${surat.id}"
                 data-nomor="${surat.nomor_lengkap}"
                 data-perihal="${surat.perihal}"
-                title="Hapus Surat"
-                style="font-size: 16px; line-height: 1;">
-          🗑️
+                title="Hapus Surat">
+          <span style="font-weight: bold; font-size: 18px; color: #991b1b;">×</span>
         </button>
       </td>
     `
