@@ -749,12 +749,14 @@ function setupFilters() {
     const option = document.createElement('option')
     option.value = year
     option.textContent = year
-    if (year === currentYear) option.selected = true
+    // REMOVED: Auto-select current year
+    // Biarkan user pilih sendiri atau pilih "Semua Tahun"
     yearSelect.appendChild(option)
   })
   
-  // Set default filter to current year
-  currentFilters.tahun = currentYear.toString()
+  // REMOVED: Default filter current year
+  // Biarkan filter kosong, user bebas pilih
+  // currentFilters.tahun = currentYear.toString()
 }
 
 // Handle filter change
