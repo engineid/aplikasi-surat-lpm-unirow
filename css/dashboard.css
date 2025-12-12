@@ -104,34 +104,27 @@
 
 /* NEW: Charts Section */
 .charts-section {
-  margin-bottom: 1.5rem; /* ← Dikurangi */
+  margin-bottom: 2rem;
 }
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* ← Fixed 2 kolom */
-  gap: 1rem; /* ← Dikurangi */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
 }
 
 .chart-card {
   background-color: #ffffff;
   border-radius: 0.5rem;
-  padding: 1rem; /* ← Dikurangi */
+  padding: 1.5rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  max-height: 300px; /* ← TAMBAH INI */
 }
 
 .chart-title {
-  font-size: 0.875rem; /* ← Dikurangi */
+  font-size: 1.125rem;
   font-weight: 600;
   color: #1f2937;
-  margin: 0 0 0.75rem 0; /* ← Dikurangi */
-}
-
-/* TAMBAH INI - Batasi tinggi canvas */
-.chart-card canvas {
-  max-height: 220px !important;
-  width: 100% !important;
+  margin: 0 0 1rem 0;
 }
 
 /* Action Bar */
@@ -294,53 +287,43 @@
 
 /* NEW: Icon Buttons */
 .btn-icon {
-  display: inline-flex; /* ← PENTING */
-  align-items: center;
-  justify-content: center;
-  width: 32px; /* ← TAMBAH */
-  height: 32px; /* ← TAMBAH */
   padding: 0.5rem;
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: transparent;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  margin: 0 0.125rem;
 }
 
-/* TAMBAH INI - Force SVG size & display */
 .btn-icon svg {
-  width: 16px;
-  height: 16px;
-  display: block; /* ← PENTING agar terlihat */
+  display: block;
 }
 
 .btn-icon.btn-edit {
   background-color: #dbeafe;
-  color: #1e40af;
-}
-
-.btn-icon.btn-edit svg {
-  stroke: #1e40af; /* ← TAMBAH: Force stroke color */
+  color: #2563eb;
 }
 
 .btn-icon.btn-edit:hover {
-  background-color: #bfdbfe;
-  transform: scale(1.1); /* ← Lebih besar saat hover */
+  background-color: #2563eb;
+  color: #ffffff;
+  transform: scale(1.05);
 }
 
 .btn-icon.btn-delete {
   background-color: #fee2e2;
-  color: #991b1b;
-  margin-left: 0.5rem; /* ← TAMBAH: Spacing */
-}
-
-.btn-icon.btn-delete svg {
-  stroke: #991b1b; /* ← TAMBAH: Force stroke color */
+  color: #dc2626;
 }
 
 .btn-icon.btn-delete:hover {
-  background-color: #fecaca;
-  transform: scale(1.1); /* ← Lebih besar saat hover */
+  background-color: #dc2626;
+  color: #ffffff;
+  transform: scale(1.05);
 }
 
 /* Pagination */
@@ -754,19 +737,6 @@
   }
 }
 
-.charts-grid {
-    grid-template-columns: 1fr; /* 1 kolom di mobile */
-  }
-  
-  .chart-card {
-    max-height: 250px;
-  }
-  
-  .chart-card canvas {
-    max-height: 180px !important;
-  }
-}
-
 /* Responsive - Mobile */
 @media (max-width: 480px) {
   .header-content {
@@ -837,19 +807,6 @@
   }
 }
 
-.chart-card {
-    padding: 0.75rem;
-    max-height: 220px;
-  }
-  
-  .chart-title {
-    font-size: 0.8rem;
-  }
-  
-  .chart-card canvas {
-    max-height: 150px !important;
-  }
-
 /* Print Styles */
 @media print {
   .header,
@@ -875,39 +832,38 @@
 }
 
 /* ========================================
-   FIX: Icon Delete Visibility
+   FIX CRITICAL: Icon Delete Visibility - FINAL VERSION
+   Support untuk SPAN (× symbol)
    ======================================== */
 
-/* Force button & SVG display */
-.btn-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 32px !important;
-  height: 32px !important;
-}
-
-.btn-icon svg {
-  display: block !important;
-  width: 16px !important;
-  height: 16px !important;
-  fill: none !important;
-}
-
-/* Force delete icon stroke color */
+/* Force delete button visibility */
 .btn-icon.btn-delete {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   background-color: #fee2e2 !important;
+  color: #dc2626 !important;
   margin-left: 0.5rem !important;
 }
 
-.btn-icon.btn-delete svg {
-  stroke: #991b1b !important;
-  stroke-width: 2 !important;
+/* CRITICAL: Force delete span (× symbol) visibility */
+.btn-icon.btn-delete span {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-weight: bold !important;
+  font-size: 18px !important;
+  color: #991b1b !important;
+  line-height: 1 !important;
 }
 
-.btn-icon.btn-delete svg polyline,
-.btn-icon.btn-delete svg path,
-.btn-icon.btn-delete svg line {
-  stroke: #991b1b !important;
-  stroke-width: 2 !important;
+/* Hover state */
+.btn-icon.btn-delete:hover {
+  background-color: #fecaca !important;
+  transform: scale(1.1) !important;
+}
+
+/* Ensure table cell doesn't hide icons */
+td .btn-icon {
+  overflow: visible !important;
 }
