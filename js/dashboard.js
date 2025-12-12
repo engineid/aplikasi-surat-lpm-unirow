@@ -315,11 +315,29 @@ async function loadSuratList(page = 1) {
       .from('surat_keluar')
       .select('*', { count: 'exact' })
     
-    if (tahun) query = query.eq('tahun', tahun)
-    if (bulan) query = query.eq('bulan', bulan)
-    if (jenis) query = query.eq('jenis_surat', jenis)
+    // Filter tahun
+    if (tahun) {
+      query = query.eq('tahun', tahun)
+    }
     
-    // NEW: Date range filtering
+    // Filter bulan - Convert angka ke romawi
+    if (bulan) {
+      const bulanRomawi = {
+        '1': 'I', '2': 'II', '3': 'III', '4': 'IV', '5': 'V', '6': 'VI',
+        '7': 'VII', '8': 'VIII', '9': 'IX', '10': 'X', '11': 'XI', '12': 'XII'
+      }
+      const kodeRomawi = bulanRomawi[bulan]
+      if (kodeRomawi) {
+        query = query.eq('kode_bulan', kodeRomawi)
+      }
+    }
+    
+    // Filter jenis
+    if (jenis) {
+      query = query.eq('jenis_surat', jenis)
+    }
+    
+    // Date range filtering (override month filter if exists)
     if (tanggalMulai) {
       query = query.gte('tanggal_surat', tanggalMulai)
     }
@@ -327,6 +345,7 @@ async function loadSuratList(page = 1) {
       query = query.lte('tanggal_surat', tanggalSelesai)
     }
     
+    // Search
     if (search) {
       query = query.or(`perihal.ilike.%${search}%,tujuan.ilike.%${search}%`)
     }
