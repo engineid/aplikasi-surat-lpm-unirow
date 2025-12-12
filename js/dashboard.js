@@ -228,6 +228,9 @@ async function init() {
   // Display user name
   displayUserName()
   
+  // Setup filters FIRST (before loading data)
+  setupFilters()
+  
   // Load initial data
   await Promise.all([
     loadJenisSurat(),
@@ -238,9 +241,6 @@ async function init() {
   
   // Setup event listeners
   setupEventListeners()
-  
-  // Setup filters
-  setupFilters()
 }
 
 // Display user name in header
@@ -320,16 +320,9 @@ async function loadSuratList(page = 1) {
       query = query.eq('tahun', tahun)
     }
     
-    // Filter bulan - Convert angka ke romawi
+    // Filter bulan - Value sudah romawi dari dropdown
     if (bulan) {
-      const bulanRomawi = {
-        '1': 'I', '2': 'II', '3': 'III', '4': 'IV', '5': 'V', '6': 'VI',
-        '7': 'VII', '8': 'VIII', '9': 'IX', '10': 'X', '11': 'XI', '12': 'XII'
-      }
-      const kodeRomawi = bulanRomawi[bulan]
-      if (kodeRomawi) {
-        query = query.eq('kode_bulan', kodeRomawi)
-      }
+      query = query.eq('kode_bulan', bulan)
     }
     
     // Filter jenis
