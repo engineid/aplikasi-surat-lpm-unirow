@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aplikasi Pencatatan Surat Keluar LPM UNIROW">
+  <title>Login - Aplikasi Surat Keluar</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo">
+        <h1>📋 LOGIN</h1>
+        <p>Sistem Pencatatan Surat Keluar</p>
+      </div>
+      
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="email">📧 Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email"
+            required 
+            autofocus
+            placeholder="admin@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">🔒 Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password"
+            required 
+            placeholder="Masukkan password">
+        </div>
+        
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="remember"> 
+            <span>Ingat Saya</span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn-login">
+          MASUK
+        </button>
+        
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+      </form>
+      
+      <div class="footer">
+        <p>v4.0.0 | &copy; 2025 Tim Santai</p>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>

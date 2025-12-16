@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard Aplikasi Surat LPM UNIROW">
+  <title>Dashboard - Aplikasi Surat LPM UNIROW</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <h1>📋 Surat Keluar LPM UNIROW</h1>
+      <div class="user-info">
+        <span id="userName">Admin</span>
+        <button id="btnLogout" class="btn btn-secondary btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Statistics Cards -->
+      <section class="stats-section">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <p class="stat-label">Total Surat Keluar Tahun Ini</p>
+            <p class="stat-value" id="totalSurat">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <p class="stat-label">Bulan Ini</p>
+            <p class="stat-value" id="suratBulanIni">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-info">
+            <p class="stat-label">Gap Nomor</p>
+            <p class="stat-value" id="gapNomor">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Section -->
+      <section class="charts-section">
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 class="chart-title">📊 Surat per Bulan Tahun Ini</h3>
+            <canvas id="chartPerBulan"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">📈 Distribusi per Jenis</h3>
+            <canvas id="chartPerJenis"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Bar -->
+      <section class="action-bar">
+        <button id="btnTambahSurat" class="btn btn-primary">+ Tambah Surat Keluar</button>
+        <button id="btnExport" class="btn btn-secondary">📥 Export Excel</button>
+      </section>
+
+      <!-- Filters -->
+      <section class="filter-bar">
+        <select id="filterTahun" class="filter-select"><option value="">Semua Tahun</option></select>
+        <select id="filterBulan" class="filter-select">
+          <option value="">Semua Bulan</option>
+          <option value="I">Januari</option><option value="II">Februari</option><option value="III">Maret</option>
+          <option value="IV">April</option><option value="V">Mei</option><option value="VI">Juni</option>
+          <option value="VII">Juli</option><option value="VIII">Agustus</option><option value="IX">September</option>
+          <option value="X">Oktober</option><option value="XI">November</option><option value="XII">Desember</option>
+        </select>
+        <select id="filterJenis" class="filter-select"><option value="">Semua Jenis</option></select>
+        <input type="date" id="filterTanggalMulai" class="filter-select" title="Dari Tanggal">
+        <input type="date" id="filterTanggalSelesai" class="filter-select" title="Sampai Tanggal">
+        <input type="text" id="searchInput" placeholder="Cari perihal atau tujuan..." class="search-input">
+        <button id="btnResetFilter" class="btn btn-secondary btn-sm" title="Reset Semua Filter">🔄</button>
+      </section>
+
+      <!-- Table -->
+      <section class="table-section">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>No</th><th>Nomor Surat</th><th>Tanggal</th><th>Jenis</th>
+                <th>Perihal</th><th>Tujuan</th><th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tableSuratBody">
+              <tr><td colspan="7" class="text-center"><p class="loading-text">Memuat data...</p></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modals (keeping original structure) -->
+  <div id="modalFormSurat" class="modal">
+    <div class="modal-content">
+      <button class="close" id="closeModal">&times;</button>
+      <div class="modal-header"><h2 id="modalTitle">Tambah Surat Baru</h2></div>
+      <div class="modal-body">
+        <form id="formSurat">
+          <input type="hidden" id="suratId" name="id">
+          <div class="form-row">
+            <div class="form-group" style="flex: 2;">
+              <label for="nomorUrut">Nomor Urut Surat *</label>
+              <input type="number" id="nomorUrut" name="nomor_urut" required min="1" placeholder="001">
+              <small id="nomorSuggestion" class="text-muted"></small>
+              <small id="nomorWarning" class="text-danger" style="display: none;"></small>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="suffix">Suffix</label>
+              <input type="text" id="suffix" name="suffix" maxlength="5" placeholder="a, b, ...">
+              <small class="text-muted">Opsional: 024a</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="jenisSurat">Jenis Surat *</label>
+            <select id="jenisSurat" name="jenis_surat" required><option value="">Pilih Jenis Surat</option></select>
+          </div>
+          <div class="form-group">
+            <label for="tanggalSurat">Tanggal Surat *</label>
+            <input type="date" id="tanggalSurat" name="tanggal_surat" required>
+            <small id="tanggalInfo" class="text-muted"></small>
+          </div>
+          <div class="form-group">
+            <label for="perihal">Perihal Surat *</label>
+            <textarea id="perihal" name="perihal" required rows="3" placeholder="Masukkan perihal surat..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tujuan">Tujuan Surat *</label>
+            <div class="autocomplete-wrapper">
+              <input type="text" id="tujuan" name="tujuan" required autocomplete="off" placeholder="Ketik nama instansi/pejabat...">
+              <div id="autocomplete-list" class="autocomplete-items"></div>
+            </div>
+            <small class="text-muted">💡 Ketik minimal 2 huruf untuk search, atau klik untuk recent</small>
+          </div>
+          <div class="form-group">
+            <label for="keterangan">Keterangan (Opsional)</label>
+            <textarea id="keterangan" name="keterangan" rows="2" placeholder="Keterangan tambahan..."></textarea>
+          </div>
+          <div class="preview-box" id="previewBox" style="display: none;">
+            <strong>Preview Nomor Lengkap:</strong>
+            <p id="nomorPreview">-</p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnBatal">Batal</button>
+        <button type="submit" form="formSurat" class="btn btn-primary" id="btnSimpan">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDeleteConfirm" class="modal-overlay">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content-confirm">
+        <div class="modal-icon-warning">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#dc2626" stroke-width="2"/>
+            <path d="M12 8V12M12 16H12.01" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="modal-title-confirm">Hapus Surat?</h3>
+        <p class="modal-message-confirm">Apakah Anda yakin ingin menghapus surat ini?<br>Data yang dihapus tidak dapat dikembalikan.</p>
+        <div class="modal-detail-confirm" id="deleteDetail"></div>
+        <div class="modal-actions-confirm">
+          <button class="btn btn-secondary" id="btnCancelDelete">Batal</button>
+          <button class="btn btn-danger" id="btnConfirmDelete">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/dashboard.js"></script>
+
+</body>
+</html>
